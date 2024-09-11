@@ -45,6 +45,8 @@
       in {
 
 
+        packages.dotnet678 = dotnetEnv;
+
         devShells.default = mkxShell {
           name = "DOTNET COMBO-FLAKE";
           env = dotnetEnv;
