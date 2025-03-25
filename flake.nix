@@ -18,10 +18,19 @@
           ];
         };
 
+        dotnetEnv9 = pkgs.symlinkJoin {
+          name = "dotnet-env9";
+          paths = with pkgs.dotnetCorePackages; combinePackages [
+            sdk_9_0
+          ];
+        };
 
         dotnetEnv = pkgs.symlinkJoin {
           name = "dotnet-env";
           paths = with pkgs.dotnetCorePackages; combinePackages [
+            sdk_6_0
+            sdk_7_0
+            sdk_8_0
             sdk_9_0
           ];
         };
@@ -43,7 +52,8 @@
       in {
 
 
-        packages.dotnet9 = dotnetEnv;
+        packages.dotnet9 = dotnetEnv9;
+        packages.dotnet6789 = dotnetEnv;
 
         devShells.default = mkxShell {
           name = "DOTNET COMBO-FLAKE";
@@ -53,7 +63,7 @@
         devShells.build = pkgs.mkShell {
           name = "build-shell";
           buildInputs = [
-            dotnetEnv
+            dotnet6789
             pkgs.powershell
           ];
           shellHook = ''
