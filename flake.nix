@@ -18,12 +18,6 @@
           ];
         };
 
-        dotnetEnv9 = pkgs.symlinkJoin {
-          name = "dotnet-env9";
-          paths = with pkgs.dotnetCorePackages; combinePackages [
-            sdk_9_0
-          ];
-        };
 
         dotnetEnv = pkgs.symlinkJoin {
           name = "dotnet-env";
@@ -52,7 +46,6 @@
       in {
 
 
-        packages.dotnet9 = dotnetEnv9;
         packages.dotnet6789 = dotnetEnv;
 
         devShells.default = mkxShell {
@@ -63,7 +56,7 @@
         devShells.build = pkgs.mkShell {
           name = "build-shell";
           buildInputs = [
-            dotnet6789
+            dotnetEnv
             pkgs.powershell
           ];
           shellHook = ''
