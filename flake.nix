@@ -1,4 +1,3 @@
-
 {
   description = "AN EPIC FLAKE";
 
@@ -10,31 +9,33 @@
   outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-
-
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [
-          ];
+          config = {
+            permittedInsecurePackages = [ 
+              "dotnet-sdk-6.0.428" 
+              "dotnet-sdk-7.0.410" 
+            ];
+          };
+          overlays = [];
         };
 
-
-	dotnetEnv = pkgs.symlinkJoin {
-  		name = "dotnet-env";
-  		paths = [ (with pkgs.dotnetCorePackages; combinePackages [
-    			sdk_6_0
-    			sdk_7_0
-    			sdk_8_0
-    			sdk_9_0
-  		]) ];
-	};
+        dotnetEnv = pkgs.symlinkJoin {
+          name = "dotnet-env";
+          paths = [ (with pkgs.dotnetCorePackages; combinePackages [
+            sdk_6_0
+            sdk_7_0
+            sdk_8_0
+            sdk_9_0
+          ]) ];
+        };
 
         mkxShell = { name, env }: pkgs.mkShell {
           inherit name;
           buildInputs = [
-              env
-              pkgs.lsof
-              pkgs.powershell
+            env
+            pkgs.lsof
+            pkgs.powershell
           ];
           shellHook = ''
             export PATH="~/.dotnet/tools:$PATH"
@@ -44,7 +45,6 @@
         };
 
       in {
-
 
         packages.dotnet6789 = dotnetEnv;
 
@@ -72,4 +72,3 @@
       }
     );
 }
-
