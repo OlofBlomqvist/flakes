@@ -27,6 +27,7 @@
             sdk_7_0
             sdk_8_0
             sdk_9_0
+            sdk_10_0
           ]) ];
         };
 
@@ -46,7 +47,7 @@
 
       in {
 
-        packages.dotnet6789 = dotnetEnv;
+        packages.dotnet678910 = dotnetEnv;
 
         devShells.default = mkxShell {
           name = "DOTNET COMBO-FLAKE";
@@ -55,6 +56,7 @@
             sdk_7_0
             sdk_8_0
             sdk_9_0
+            sdk_10_0
           ];
         };
 
